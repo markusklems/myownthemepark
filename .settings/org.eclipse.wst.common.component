@@ -3,6 +3,7 @@
     <wb-module deploy-name="myownthemepark">
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
         <property name="context-root" value="myownthemepark"/>
         <property name="java-output-path" value="/myownthemepark/build/classes"/>
     </wb-module>
