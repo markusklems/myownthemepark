@@ -2,4 +2,4 @@
 build/*
 
 # Ignore AWS credentials. Set your own AWS credentials here.
-#aws_conf.properties
+aws_conf.properties
