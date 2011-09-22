@@ -3,3 +3,6 @@ build/*
 
 # Ignore AWS credentials. Set your own AWS credentials here.
 aws_conf.properties
+
+# Ignore private keys.
+*.pem

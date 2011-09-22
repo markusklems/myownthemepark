@@ -25,7 +25,7 @@ public class CloudManager extends Application {
 
         // Defines the route to a cluster
         router.attach("/{clusterName}", ClusterResource.class);
-        // Defines the route to a server within a cluster
+        // Defines the route to a node within a cluster
         router.attach("/{clusterName}/{nodeName}", NodeResource.class);
 
         return router;
