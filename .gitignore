@@ -1,2 +1,5 @@
 # Ignore files in build directory. Build them on your own system.
 build/*
+
+# Ignore AWS credentials. Set your own AWS credentials here.
+aws_conf.properties
