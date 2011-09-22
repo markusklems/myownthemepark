@@ -1,0 +1,2 @@
+# Ignore files in build directory. Build them on your own system.
+build/*
