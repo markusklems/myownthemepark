@@ -47,11 +47,11 @@ public class NodeResource extends ServerResource {
         Representation toReturn = null;
         
         String clusterResourceName = (String) getRequest().getAttributes().get("clusterName");
-        String nodeResourceName = (String) getRequest().getAttributes().get("nodeName");
+        String nodeName = "ERROR_NO_NODE";
         // TODO Save Cluster model ? MVC needed?
         
         try {
-        	ec2ClusterManager.createEC2DefaultMicroNode(clusterResourceName,nodeResourceName);
+            nodeName = ec2ClusterManager.createEC2DefaultMicroNode(clusterResourceName);
 		} catch (KeeperException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,7 +61,7 @@ public class NodeResource extends ServerResource {
 		}
 
         setStatus(Status.SUCCESS_CREATED);
-        Representation rep = new StringRepresentation("Node "+nodeResourceName+" in cluster "+clusterResourceName+" created",
+        Representation rep = new StringRepresentation("Node "+nodeName+" in cluster "+clusterResourceName+" created",
                     MediaType.TEXT_PLAIN);
 
             rep.setLocationRef(getRequest().getResourceRef().getIdentifier() + "/"
