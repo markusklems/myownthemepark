@@ -27,6 +27,7 @@ public class ClusterManager implements Watcher {
 		// The exists method triggers the creation of a Watch on the zNode.
 		Stat stat = zkClient.getZk().exists(path, true);
 		if(stat == null) {
+		    // TODO Ids.OPEN_ACL_UNSAFE is unsafe
 			String createdPath = zkClient.getZk().create(path, null, Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 			logger.info("Created "+createdPath);
 			watchers.put(clusterName, new ClusterWatcher(zkClient.getZk(),createdPath));
@@ -36,7 +37,12 @@ public class ClusterManager implements Watcher {
 		}
 	}
 	
-	public boolean addNodeToCluster(String clusterName, String nodeName) throws KeeperException, InterruptedException {
+	public boolean doesNodeExist(String clusterName, String nodeName) throws KeeperException, InterruptedException {
+	    String path = "/" + clusterName + "/" + nodeName;
+	    return zkClient.getZk().exists(path, false) !=null;
+	}
+	
+	public boolean addInstanceNodeToCluster(String clusterName, String nodeName) throws KeeperException, InterruptedException {
 		String path = "/" + clusterName + "/" + nodeName;
 		// Put no Watch on the zNode.
 		Stat stat = zkClient.getZk().exists(path, false);
@@ -50,6 +56,29 @@ public class ClusterManager implements Watcher {
 			return false;
 		}
 	}
+	
+	   public boolean saveDataOnInstanceNode(String clusterName, String nodeName, byte[] data) throws KeeperException, InterruptedException {
+	        String path = "/" + clusterName + "/" + nodeName;
+	        // TODO ACL might be unsafe
+	        // TODO should offer to use SSL for secure data transfer
+	        Stat stat = zkClient.getZk().setData( path, data, -1 );
+	        if(stat == null) {
+	            logger.warn("I tried to add data to zNode at path "+path+" but the zNode apparently does not exist.");
+	            return false;
+	        }
+	        else {
+	            return true;
+	        }
+	    }
+	   
+	   public byte[] getInstanceData(String clusterName, String nodeName) throws KeeperException, InterruptedException {
+	       String path = "/" + clusterName + "/" + nodeName;
+	       Stat stat = zkClient.getZk().exists( path, false );
+	       if(stat != null) {
+	       byte[] data = zkClient.getZk().getData( path, false, stat );
+	       return data;
+	       } else return null;
+	   }
 	
 	public boolean removeNodeFromCluster(String clusterName, String nodeName) throws KeeperException, InterruptedException {
 		String path = "/" + clusterName + "/" + nodeName;
