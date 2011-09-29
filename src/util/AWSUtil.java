@@ -7,7 +7,6 @@ import com.amazonaws.auth.BasicAWSCredentials;
 
 public class AWSUtil {
 	
-	public static final String EC2_INSTANCE_PRIVATE_KEY_NAME_DEFAULT="motp";
 	public static final String PATH_TO_PROPERT_FILE="manager.aws.aws_conf";
 	public static final String AWS_ID_PROPERTY = "AWS_ID";
 	public static final String AWS_SECRET_KEY_PROPERTY = "AWS_SECRET_KEY";
